@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-orbitron: 'Plus Jakarta Sans', sans-serif;
+    --font-space: 'Inter', sans-serif;
+    --background: 207 36% 96%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 196 100% 39%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 166 100% 36%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 207 38% 94%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 193 73% 59%;
+    --accent-foreground: 222 47% 11%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 207 38% 84%;
+    --input: 207 38% 84%;
+    --ring: 196 100% 39%;
+    --chart-1: 196 100% 39%;
+    --chart-2: 166 100% 36%;
+    --chart-3: 193 73% 59%;
+    --chart-4: 38 92% 50%;
+    --chart-5: 0 72% 51%;
+    --radius: 0.75rem;
+    --sidebar-background: 207 36% 96%;
+    --sidebar-foreground: 215 16% 30%;
+    --sidebar-primary: 196 100% 39%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 207 38% 94%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 207 38% 84%;
+    --sidebar-ring: 196 100% 39%;
+  }
+
+  .dark {
+    --font-orbitron: 'Plus Jakarta Sans', sans-serif;
+    --font-space: 'Inter', sans-serif;
+    --background: 207 36% 96%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 196 100% 39%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 166 100% 36%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 207 38% 94%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 193 73% 59%;
+    --accent-foreground: 222 47% 11%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 207 38% 84%;
+    --input: 207 38% 84%;
+    --ring: 196 100% 39%;
+    --chart-1: 196 100% 39%;
+    --chart-2: 166 100% 36%;
+    --chart-3: 193 73% 59%;
+    --chart-4: 38 92% 50%;
+    --chart-5: 0 72% 51%;
+    --sidebar-background: 207 36% 96%;
+    --sidebar-foreground: 215 16% 30%;
+    --sidebar-primary: 196 100% 39%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 207 38% 94%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 207 38% 84%;
+    --sidebar-ring: 196 100% 39%;
+  }
+}
+
+
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground font-space;
+  }
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(217, 230, 239, 0.85);
+  box-shadow: 0 12px 40px rgba(0, 119, 182, 0.08), 0 2px 8px rgba(0, 119, 182, 0.04);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(217, 230, 239, 0.7);
+  box-shadow: 0 4px 24px rgba(0, 150, 199, 0.07), 0 1px 4px rgba(0, 119, 182, 0.04);
+}
+
+.glow-text {
+  text-shadow: 0 0 30px rgba(0, 150, 199, 0.35), 0 0 60px rgba(0, 150, 199, 0.15);
+}
+
+.glow-border {
+  box-shadow: 0 0 20px rgba(0, 150, 199, 0.1), 0 8px 32px rgba(0, 119, 182, 0.08);
+}
+
+.ocean-gradient {
+  background: linear-gradient(135deg, #0077B6, #0096C7, #48CAE4);
+}
+
+.earth-gradient {
+  background: linear-gradient(135deg, #00B894, #43A047, #A3E635);
+}
+
+.atmo-bg {
+  background: linear-gradient(160deg, #F4F8FB 0%, #EEF5F9 40%, #E3F2FD 100%);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(0, 150, 199, 0.2); }
+  50% { box-shadow: 0 0 28px rgba(0, 150, 199, 0.5); }
+}
+
+@keyframes atmospheric-drift {
+  0%, 100% { transform: translateX(0) translateY(0) scale(1); opacity: 0.5; }
+  33% { transform: translateX(25px) translateY(-12px) scale(1.06); opacity: 0.65; }
+  66% { transform: translateX(-18px) translateY(8px) scale(0.97); opacity: 0.4; }
+}
+
+@keyframes grid-fade {
+  0%, 100% { opacity: 0.03; }
+  50% { opacity: 0.07; }
+}
+
+.animate-float {
+  animation: float 10s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-atmospheric {
+  animation: atmospheric-drift 20s ease-in-out infinite;
+}
+
+.animate-grid {
+  animation: grid-fade 8s ease-in-out infinite;
+}

@@ -1,0 +1,74 @@
+{
+  "name": "EnvironmentalEvent",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "earthquake",
+        "wildfire",
+        "cyclone",
+        "flood",
+        "pollution",
+        "tsunami",
+        "storm",
+        "volcanic"
+      ]
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "low",
+        "moderate",
+        "high",
+        "critical"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "monitoring",
+        "resolved"
+      ],
+      "default": "active"
+    },
+    "location": {
+      "type": "string"
+    },
+    "latitude": {
+      "type": "number"
+    },
+    "longitude": {
+      "type": "number"
+    },
+    "description": {
+      "type": "string"
+    },
+    "ai_analysis": {
+      "type": "string"
+    },
+    "risk_score": {
+      "type": "number"
+    },
+    "affected_population": {
+      "type": "number"
+    },
+    "date_detected": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "image_url": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "type",
+    "severity",
+    "location"
+  ]
+}

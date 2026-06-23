@@ -1,0 +1,63 @@
+{
+  "name": "Mission",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "codename": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "satellite",
+        "observation",
+        "monitoring",
+        "research",
+        "emergency"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "planned",
+        "active",
+        "completed",
+        "standby"
+      ],
+      "default": "planned"
+    },
+    "description": {
+      "type": "string"
+    },
+    "objectives": {
+      "type": "string"
+    },
+    "launch_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "coverage_area": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "progress": {
+      "type": "number"
+    },
+    "data_collected_tb": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "name",
+    "type",
+    "status"
+  ]
+}
