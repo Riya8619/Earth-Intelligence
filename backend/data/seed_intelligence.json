@@ -1,0 +1,18 @@
+[
+  {
+    "headline": "Arctic Ice Sheet Thinning Accelerates by 18%",
+    "summary": "Satellite data shows accelerated thinning of Arctic permafrost layers in Q1 2026.",
+    "category": "climate",
+    "confidence_score": 0.92,
+    "source": "NASA EO",
+    "tags": "arctic,ice,climate,permafrost"
+  },
+  {
+    "headline": "Unusual Seismic Cluster Detected — Pacific Ring of Fire",
+    "summary": "A cluster of 40+ micro-earthquakes recorded in 48h along the Cascadia subduction zone.",
+    "category": "seismic",
+    "confidence_score": 0.87,
+    "source": "USGS",
+    "tags": "earthquake,seismic,pacific,cascadia"
+  }
+]

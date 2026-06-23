@@ -1,0 +1,35 @@
+[
+  {
+    "title": "M6.2 Earthquake — Hindu Kush Region",
+    "description": "Moderate seismic activity detected near Afghanistan-Pakistan border.",
+    "event_type": "earthquake",
+    "severity": "high",
+    "latitude": 36.71,
+    "longitude": 70.93,
+    "location_name": "Hindu Kush, Afghanistan",
+    "source": "USGS",
+    "occurred_at": "2026-05-28T14:32:00Z"
+  },
+  {
+    "title": "Wildfire Alert — Western Canada",
+    "description": "Large-scale wildfire spreading across British Columbia.",
+    "event_type": "wildfire",
+    "severity": "critical",
+    "latitude": 53.72,
+    "longitude": -127.64,
+    "location_name": "British Columbia, Canada",
+    "source": "NASA FIRMS",
+    "occurred_at": "2026-05-29T08:15:00Z"
+  },
+  {
+    "title": "Tropical Cyclone — Bay of Bengal",
+    "description": "Category 3 cyclone moving toward Bangladesh coast.",
+    "event_type": "cyclone",
+    "severity": "critical",
+    "latitude": 18.5,
+    "longitude": 89.2,
+    "location_name": "Bay of Bengal",
+    "source": "OpenWeather",
+    "occurred_at": "2026-05-30T03:00:00Z"
+  }
+]
