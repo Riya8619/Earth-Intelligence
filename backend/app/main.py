@@ -89,7 +89,11 @@ async def intelligence_socket(websocket: WebSocket):
 
 @app.get("/debug")
 def debug():
+
+    db = SessionLocal()
+
     return {
-        "database_url": settings.DATABASE_URL,
-        "engine": str(engine.url)
+        "users": db.query(User).count(),
+        "missions": db.query(Mission).count(),
+        "events": db.query(Event).count()
     }

@@ -3,46 +3,40 @@ from datetime import datetime
 
 from app.database import Base, engine, SessionLocal
 
-# IMPORTANT: Import ALL models before create_all()
 from app.models.user import User
 from app.models.event import Event
 from app.models.mission import Mission
 from app.models.intelligence import IntelligenceFeed
 
-# Create tables
 Base.metadata.create_all(bind=engine)
 
 db = SessionLocal()
 
-try:
-    # Seed only if empty
-    if db.query(Event).count() == 0:
+if db.query(Event).count() == 0:
 
-        with open("data/seed_events.json") as f:
-            for e in json.load(f):
-                e["occurred_at"] = datetime.fromisoformat(
-                    e["occurred_at"].replace("Z", "+00:00")
-                )
-                db.add(Event(**e))
+    with open("data/seed_events.json") as f:
+        events = json.load(f)
 
-        with open("data/seed_missions.json") as f:
-            for m in json.load(f):
-                db.add(Mission(**m))
+        for e in events:
+            e["occurred_at"] = datetime.fromisoformat(
+                e["occurred_at"].replace("Z", "+00:00")
+            )
+            db.add(Event(**e))
 
-        with open("data/seed_intelligence.json") as f:
-            for i in json.load(f):
-                db.add(IntelligenceFeed(**i))
+    with open("data/seed_missions.json") as f:
+        missions = json.load(f)
 
-        db.commit()
-        print("Database seeded successfully")
+        for m in missions:
+            db.add(Mission(**m))
 
-    else:
-        print("Database already contains data")
+    with open("data/seed_intelligence.json") as f:
+        intel = json.load(f)
 
-except Exception as e:
-    db.rollback()
-    print(f"Seeding failed: {e}")
-    raise
+        for i in intel:
+            db.add(IntelligenceFeed(**i))
 
-finally:
-    db.close()
+    db.commit()
+
+db.close()
+
+print("Database seeded successfully")
