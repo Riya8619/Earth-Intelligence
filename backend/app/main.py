@@ -18,7 +18,13 @@ from app.services.risk_service import (
     earth_health_status,
     earth_health_trend,
 )
-from app.database import engine
+from app.database import Base, engine
+from app.models.event import Event
+from app.models.mission import Mission
+from app.models.intelligence import IntelligenceFeed
+from app.models.user import User
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
