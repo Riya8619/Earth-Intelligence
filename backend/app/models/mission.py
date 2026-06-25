@@ -14,7 +14,13 @@ class Mission(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, nullable=False)
     description = Column(Text)
-    status = Column(Enum(MissionStatus), default=MissionStatus.planned)
+    status = Column(
+        Enum(
+            MissionStatus,
+            values_callable=lambda obj: [e.value for e in obj]
+        ),
+        default=MissionStatus.planned.value
+    )
     objective = Column(Text)
     region = Column(String)
     assigned_to = Column(Integer, ForeignKey("users.id"), nullable=True)
