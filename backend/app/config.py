@@ -22,7 +22,6 @@ class Settings(BaseSettings):
 
     # AI
     GROQ_API_KEY: str = ""
-    OPENAI_API_KEY: str = ""
 
     # APIs
     NASA_API_KEY: str = ""
