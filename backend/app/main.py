@@ -18,6 +18,7 @@ from app.services.risk_service import (
     earth_health_status,
     earth_health_trend,
 )
+from app.database import engine
 
 app = FastAPI()
 
@@ -78,3 +79,11 @@ async def intelligence_socket(websocket: WebSocket):
             await asyncio.sleep(20)
     except WebSocketDisconnect:
         return
+
+
+@app.get("/debug")
+def debug():
+    return {
+        "database_url": settings.DATABASE_URL,
+        "engine": str(engine.url)
+    }
