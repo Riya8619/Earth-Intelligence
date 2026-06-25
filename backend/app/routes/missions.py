@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from app.database import get_db
-from app.models.mission import Mission
+from app.models.mission import Mission,MissionStatus
 from app.services.event_service import get_operational_events
 from app.services.mission_service import build_operational_missions
 
@@ -11,7 +11,7 @@ router = APIRouter(prefix="/missions", tags=["Missions"])
 class MissionBase(BaseModel):
     title: str
     description: str | None = None
-    status: str | None = None
+    status: MissionStatus = MissionStatus.planned
     objective: str | None = None
     region: str | None = None
     assigned_to: int | None = None
@@ -23,7 +23,7 @@ class MissionCreate(MissionBase):
 class MissionUpdate(BaseModel):
     title: str | None = None
     description: str | None = None
-    status: str | None = None
+    status: MissionStatus | None = None
     objective: str | None = None
     region: str | None = None
     assigned_to: int | None = None
@@ -81,3 +81,20 @@ def delete_mission(mission_id: int, db: Session = Depends(get_db)):
     db.delete(mission)
     db.commit()
     return {"detail": "Mission deleted successfully"}
+
+@router.get("/fix-status")
+def fix_status(db: Session = Depends(get_db)):
+    missions = db.query(Mission).all()
+
+    for mission in missions:
+        if str(mission.status) not in [
+            "planned",
+            "active",
+            "completed",
+            "failed"
+        ]:
+            mission.status = MissionStatus.planned
+
+    db.commit()
+
+    return {"message": "fixed"}
