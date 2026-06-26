@@ -5,6 +5,9 @@ from app.database import get_db
 from app.models.mission import Mission,MissionStatus
 from app.services.event_service import get_operational_events
 from app.services.mission_service import build_operational_missions
+from app.services.ai_service import generate_fallback_briefing
+from app.services.event_service import gather_environmental_data
+from app.services.risk_service import calculate_earth_health_score
 
 router = APIRouter(prefix="/missions", tags=["Missions"])
 
@@ -56,10 +59,30 @@ def get_missions(db: Session = Depends(get_db)):
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
 def create_mission(payload: MissionCreate, db: Session = Depends(get_db)):
-    mission = Mission(**payload.model_dump())
+
+    environment = gather_environmental_data(db, "72h")
+    score = calculate_earth_health_score(environment)
+
+    briefing = generate_fallback_briefing(
+        environment=environment,
+        earth_health_score=score,
+        query=payload.objective or payload.title
+    )
+
+    mission = Mission(
+        title=payload.title,
+        description=payload.description,
+        status=payload.status,
+        objective=payload.objective,
+        region=payload.region,
+        assigned_to=payload.assigned_to,
+        ai_briefing=briefing["summary"]
+    )
+
     db.add(mission)
     db.commit()
     db.refresh(mission)
+
     return mission
 
 @router.put("/{mission_id}")
