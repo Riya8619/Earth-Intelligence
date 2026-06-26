@@ -4,13 +4,15 @@
     "description": "Monitor and assess ocean temperature anomalies in the Indian Ocean.",
     "status": "active",
     "objective": "Predict monsoon disruption patterns using satellite thermal data.",
-    "region": "Indian Ocean"
+    "region": "Indian Ocean",
+    "assigned_to": "Earth Intelligence AI"
   },
   {
     "title": "Sentinel Forest Watch",
     "description": "AI-driven deforestation detection across Amazon basin.",
     "status": "planned",
     "objective": "Reduce deforestation alert response time to under 6 hours.",
-    "region": "Amazon Basin, South America"
+    "region": "Amazon Basin, South America",
+    "assigned_to": "Earth Intelligence AI"
   }
 ]

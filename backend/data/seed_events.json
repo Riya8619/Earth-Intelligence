@@ -8,6 +8,8 @@
     "longitude": 70.93,
     "location_name": "Hindu Kush, Afghanistan",
     "source": "USGS",
+    "source_url": "https://earthquake.usgs.gov/",
+    "ai_analysis": "A magnitude 6.2 earthquake struck the Hindu Kush region. Moderate shaking is expected across eastern Afghanistan and northern Pakistan. Emergency authorities should monitor aftershocks and inspect vulnerable infrastructure.",
     "occurred_at": "2026-05-28T14:32:00Z"
   },
   {
@@ -19,6 +21,8 @@
     "longitude": -127.64,
     "location_name": "British Columbia, Canada",
     "source": "NASA FIRMS",
+    "source_url": "https://firms.modaps.eosdis.nasa.gov/",
+    "ai_analysis": "Satellite fire detections indicate rapid wildfire expansion across British Columbia. Dry vegetation and strong winds increase the likelihood of continued spread and deteriorating air quality.",
     "occurred_at": "2026-05-29T08:15:00Z"
   },
   {
@@ -30,6 +34,8 @@
     "longitude": 89.2,
     "location_name": "Bay of Bengal",
     "source": "OpenWeather",
+    "source_url": "https://openweathermap.org/",
+    "ai_analysis": "A Category 3 tropical cyclone is strengthening over the Bay of Bengal. Heavy rainfall, coastal flooding and damaging winds are expected near Bangladesh and eastern India. Continuous monitoring is recommended.",
     "occurred_at": "2026-05-30T03:00:00Z"
   }
 ]

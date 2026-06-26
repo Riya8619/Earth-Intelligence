@@ -5,7 +5,9 @@
     "category": "climate",
     "confidence_score": 0.92,
     "source": "NASA EO",
-    "tags": "arctic,ice,climate,permafrost"
+    "tags": "arctic,ice,climate,permafrost",
+    "raw_data": "{\"region\":\"Arctic\",\"ice_loss_percent\":18,\"source\":\"NASA EO\"}",
+    "ai_insight": "Satellite observations indicate accelerated Arctic warming and continued ice loss. Long-term impacts include rising sea levels, ecosystem disruption and altered climate patterns."
   },
   {
     "headline": "Unusual Seismic Cluster Detected — Pacific Ring of Fire",
@@ -13,6 +15,8 @@
     "category": "seismic",
     "confidence_score": 0.87,
     "source": "USGS",
-    "tags": "earthquake,seismic,pacific,cascadia"
+    "tags": "earthquake,seismic,pacific,cascadia",
+    "raw_data": "{\"cluster_count\":42,\"region\":\"Cascadia\",\"source\":\"USGS\"}",
+    "ai_insight": "Persistent microseismic activity has been observed along the Cascadia subduction zone. No immediate large rupture is indicated, but elevated monitoring is recommended."
   }
 ]
