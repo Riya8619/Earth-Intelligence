@@ -17,7 +17,7 @@ class MissionBase(BaseModel):
     status: MissionStatus = MissionStatus.planned
     objective: str | None = None
     region: str | None = None
-    assigned_to: int | None = None
+    assigned_to: str | None = "Earth Intelligence AI"
     ai_briefing: str | None = None
 
 class MissionCreate(MissionBase):
@@ -29,7 +29,7 @@ class MissionUpdate(BaseModel):
     status: MissionStatus | None = None
     objective: str | None = None
     region: str | None = None
-    assigned_to: int | None = None
+    assigned_to: str | None = "Earth Intelligence AI"
     ai_briefing: str | None = None
 
 @router.get("/")
@@ -75,7 +75,7 @@ def create_mission(payload: MissionCreate, db: Session = Depends(get_db)):
         status=payload.status,
         objective=payload.objective,
         region=payload.region,
-        assigned_to=payload.assigned_to,
+        assigned_to="Earth Intelligence AI",
         ai_briefing=briefing["summary"]
     )
 
