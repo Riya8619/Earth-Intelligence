@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: earth-intelligence-backend
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: APP_NAME
+        value: Earth Intelligence X
+      - key: APP_ENV
+        value: production
+      - key: DEBUG
+        value: "False"
+      - key: SECRET_KEY
+        sync: false
+      - key: ALGORITHM
+        value: HS256
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "60"
+      - key: REFRESH_TOKEN_EXPIRE_DAYS
+        value: "7"
+      - key: DATABASE_URL
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: NASA_API_KEY
+        sync: false
+      - key: NASA_FIRMS_API_KEY
+        sync: false
+      - key: USGS_API_URL
+        value: https://earthquake.usgs.gov/fdsnws/event/1/query
+      - key: OPEN_METEO_BASE_URL
+        value: https://api.open-meteo.com/v1
+      - key: GDACS_API_URL
+        value: https://www.gdacs.org/gdacsapi/api/events/geteventlist
