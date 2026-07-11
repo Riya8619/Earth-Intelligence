@@ -1,12 +1,15 @@
 from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models.user import User
-from app.utils.security import hash_password, verify_password, create_access_token
+from app.utils.security import hash_password, verify_password, create_access_token, decode_token
 from pydantic import BaseModel, EmailStr
+from jose import JWTError
 import secrets
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
+bearer_scheme = HTTPBearer(auto_error=False)
 
 class RegisterSchema(BaseModel):
     email: EmailStr
@@ -23,6 +26,26 @@ class ForgotPasswordSchema(BaseModel):
 class ResetPasswordSchema(BaseModel):
     token: str
     new_password: str
+
+
+def get_current_user(
+    credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme),
+    db: Session = Depends(get_db),
+) -> User:
+    if credentials is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated")
+    try:
+        payload = decode_token(credentials.credentials)
+        user_id = payload.get("sub")
+    except JWTError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid or expired token")
+    if user_id is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token payload")
+    user = db.query(User).filter(User.id == int(user_id)).first()
+    if user is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
+    return user
+
 
 @router.post("/register")
 def register(payload: RegisterSchema, db: Session = Depends(get_db)):
@@ -45,6 +68,17 @@ def login(payload: LoginSchema, db: Session = Depends(get_db)):
         raise HTTPException(status_code=401, detail="Invalid credentials")
     token = create_access_token({"sub": str(user.id), "email": user.email})
     return {"access_token": token, "token_type": "bearer"}
+
+@router.get("/me")
+def get_me(current_user: User = Depends(get_current_user)):
+    return {
+        "id": current_user.id,
+        "email": current_user.email,
+        "username": current_user.username,
+        "is_active": current_user.is_active,
+        "is_verified": current_user.is_verified,
+    }
+
 
 @router.post("/forgot-password")
 def forgot_password(payload: ForgotPasswordSchema, db: Session = Depends(get_db)):
