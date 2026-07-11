@@ -6,7 +6,7 @@ from sqlalchemy import pool
 from alembic import context
 
 # Import database base
-from app.database import Base
+from app.database import Base, DATABASE_URL
 
 # Import all models so Alembic can detect them
 from app.models.user import User
@@ -16,6 +16,12 @@ from app.models.intelligence import IntelligenceFeed
 
 # Alembic Config object
 config = context.config
+
+# Override the sqlalchemy.url from alembic.ini with the app's real
+# DATABASE_URL (already normalized to the psycopg v3 driver for Postgres
+# by app.database) so migrations always target the database the app
+# actually connects to, instead of the hardcoded local sqlite file.
+config.set_main_option("sqlalchemy.url", DATABASE_URL)
 
 # Configure logging
 if config.config_file_name is not None:
