@@ -1,0 +1,16 @@
+{
+  "name": "Earth Intelligence X",
+  "short_name": "Earth IX",
+  "description": "Planetary intelligence, events, and mission monitoring dashboard.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
