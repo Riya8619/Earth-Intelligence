@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
 const statusIcons = {
@@ -39,7 +40,7 @@ export default function Missions() {
   const [editing, setEditing] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["missions"],
     queryFn: async () => {
       const res = await api.get("/missions/");
@@ -51,12 +52,16 @@ export default function Missions() {
 
   const missions = getMissions(data);
 
+  const [mutationError, setMutationError] = useState(null);
+
   const createMut = useMutation({
     mutationFn: async (payload) => (await api.post("/missions/", payload)).data,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["missions"] });
       setFormOpen(false);
+      setMutationError(null);
     },
+    onError: (err) => setMutationError(err?.response?.data?.detail || "Failed to create mission. Please try again."),
   });
 
   const updateMut = useMutation({
@@ -65,7 +70,9 @@ export default function Missions() {
       queryClient.invalidateQueries({ queryKey: ["missions"] });
       setEditing(null);
       setFormOpen(false);
+      setMutationError(null);
     },
+    onError: (err) => setMutationError(err?.response?.data?.detail || "Failed to update mission. Please try again."),
   });
 
   const deleteMut = useMutation({
@@ -73,7 +80,9 @@ export default function Missions() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["missions"] });
       setDeleteId(null);
+      setMutationError(null);
     },
+    onError: (err) => setMutationError(err?.response?.data?.detail || "Failed to delete mission. Please try again."),
   });
 
   return (
@@ -92,9 +101,20 @@ export default function Missions() {
         </Button>
       </div>
 
+      {mutationError && (
+        <div className="mb-6 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+          {mutationError}
+        </div>
+      )}
+
       {isLoading ? (
         <div className="flex justify-center py-20">
           <div className="w-8 h-8 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
+        </div>
+      ) : isError ? (
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-700">
+          Couldn't load missions from the backend. Check your connection and try again — if this
+          keeps happening, open the browser console for details.
         </div>
       ) : (
         <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4">
@@ -202,7 +222,7 @@ export default function Missions() {
 function MissionForm({ initial, onSubmit, isLoading }) {
   const [form, setForm] = useState({
     title: initial?.title || initial?.name || "",
-    status: "planned",
+    status: (initial?.status || "planned").toLowerCase(),
     description: initial?.description || "",
     objective: initial?.objective || "",
     region: initial?.region || "",
@@ -227,6 +247,20 @@ function MissionForm({ initial, onSubmit, isLoading }) {
       <div>
         <Label>Region</Label>
         <Input value={form.region} onChange={(event) => set("region", event.target.value)} />
+      </div>
+      <div>
+        <Label>Status</Label>
+        <Select value={form.status} onValueChange={(value) => set("status", value)}>
+          <SelectTrigger className="w-full">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="planned">Planned</SelectItem>
+            <SelectItem value="active">Active</SelectItem>
+            <SelectItem value="completed">Completed</SelectItem>
+            <SelectItem value="failed">Failed</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
       <Button disabled={isLoading} type="submit">
         {isLoading ? "Saving..." : "Save"}
