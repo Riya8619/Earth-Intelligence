@@ -102,7 +102,7 @@ export default function Events() {
   const [filterType, setFilterType] = useState("all");
   const [filterSeverity, setFilterSeverity] = useState("all");
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["events"],
     queryFn: async () => {
       const res = await api.get("/events/");
@@ -190,6 +190,11 @@ export default function Events() {
       {isLoading ? (
         <div className="flex justify-center py-20">
           <div className="w-8 h-8 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
+        </div>
+      ) : isError ? (
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-700">
+          Couldn't load events from the backend. Check your connection and try again — if this
+          keeps happening, open the browser console for details.
         </div>
       ) : (
         <div className="grid gap-8">
