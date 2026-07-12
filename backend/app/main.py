@@ -18,29 +18,41 @@ from app.services.risk_service import (
     earth_health_status,
     earth_health_trend,
 )
-from app.database import Base, engine
-from app.models.event import Event
-from app.models.mission import Mission
-from app.models.intelligence import IntelligenceFeed
-from app.models.user import User
-
-Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-origins = [
-    settings.FRONTEND_URL,
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "http://localhost:5174",
-    "http://127.0.0.1:5174",
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
+# FRONTEND_URL can be a single URL or a comma-separated list (e.g. when you
+# have both a production and a preview Vercel deployment). Trailing slashes
+# and stray whitespace are stripped so small mismatches don't silently break
+# CORS (a common cause of every API call appearing to "hang" or return
+# empty/zero data in the frontend).
+_configured_origins = [
+    origin.strip().rstrip("/")
+    for origin in (settings.FRONTEND_URL or "").split(",")
+    if origin.strip()
 ]
+
+origins = list(
+    dict.fromkeys(
+        [
+            *_configured_origins,
+            "http://localhost:5173",
+            "http://127.0.0.1:5173",
+            "http://localhost:5174",
+            "http://127.0.0.1:5174",
+            "http://localhost:3000",
+            "http://127.0.0.1:3000",
+        ]
+    )
+)
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
+    # Vercel gives every deployment (production + every preview branch) its
+    # own unique URL. Rather than requiring FRONTEND_URL to be updated for
+    # every preview deploy, allow any *.vercel.app origin automatically.
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -85,15 +97,3 @@ async def intelligence_socket(websocket: WebSocket):
             await asyncio.sleep(20)
     except WebSocketDisconnect:
         return
-
-
-@app.get("/debug")
-def debug():
-
-    db = SessionLocal()
-
-    return {
-        "users": db.query(User).count(),
-        "missions": db.query(Mission).count(),
-        "events": db.query(Event).count()
-    }
