@@ -107,7 +107,7 @@ export default function HeroSection({ events = [], stats }) {
             <div className="absolute top-1/3 left-0 z-20">
               <FloatingCard
                 label="Earth Health"
-                value={stats?.healthScore || 72}
+                value={stats?.healthScore ?? 72}
                 unit="/100"
                 color="secondary"
                 delay={1.2}
