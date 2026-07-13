@@ -42,21 +42,20 @@ API docs are available at `http://localhost:8000/docs` once running.
 | Variable | Required | Description |
 |---|---|---|
 | `APP_NAME` | yes | Application name |
-| `APP_ENV` | no | `development` or `production` |
-| `DEBUG` | no | `True`/`False` |
+| `APP_ENV` | yes | `development` or `production` |
+| `DEBUG` | True | `True`/`False` |
 | `SECRET_KEY` | yes | JWT signing secret — set a strong random value in production |
-| `ALGORITHM` | no | JWT algorithm (default `HS256`) |
-| `ACCESS_TOKEN_EXPIRE_MINUTES` | no | Access token lifetime |
-| `REFRESH_TOKEN_EXPIRE_DAYS` | no | Refresh token lifetime |
+| `ALGORITHM` | yes | JWT algorithm (default `HS256`) |
+| `ACCESS_TOKEN_EXPIRE_MINUTES` | yes | Access token lifetime |
+| `REFRESH_TOKEN_EXPIRE_DAYS` | yes | Refresh token lifetime |
 | `DATABASE_URL` | yes | `sqlite:///./earth_intel_x.db` locally, or a Postgres URL (`postgresql://...`) in production — automatically normalized to use the `psycopg` v3 driver |
 | `FRONTEND_URL` | yes | Deployed frontend origin, used for CORS |
-| `GROQ_API_KEY` | one of these two | Used for AI briefings if `OPENAI_API_KEY` isn't set |
-| `OPENAI_API_KEY` | one of these two | Takes priority over Groq if set |
-| `NASA_API_KEY` | no | NASA data source |
-| `NASA_FIRMS_API_KEY` | no | NASA FIRMS fire data |
-| `USGS_API_URL` | no | Defaults to the public USGS endpoint |
-| `OPEN_METEO_BASE_URL` | no | Defaults to the public Open-Meteo endpoint |
-| `GDACS_API_URL` | no | Defaults to the public GDACS endpoint |
+| `GROQ_API_KEY` | yes | Used for AI briefings
+| `NASA_API_KEY` | yes | NASA data source |
+| `NASA_FIRMS_API_KEY` | yees | NASA FIRMS fire data |
+| `USGS_API_URL` | yes | Defaults to the public USGS endpoint |
+| `OPEN_METEO_BASE_URL` | yes | Defaults to the public Open-Meteo endpoint |
+| `GDACS_API_URL` | yes | Defaults to the public GDACS endpoint 
 
 See `.env.example` for a ready-to-copy template.
 
